@@ -80,26 +80,11 @@ class ViewController: UIViewController {
         mapView.rx.didFinishRenderingMap.asDriver()
             .drive(onNext: { print("Did finish rendering map: fully rendered \($0.isFullyRendered)") })
             .addDisposableTo(disposeBag)
-        
-        mapView.rx.handleViewForAnnotation { (mapView, annotation) in
-            if let _ = annotation as? MKUserLocation {
-                return nil
-            } else if let a = annotation as? Annotation {
-                let view = mapView.dequeueReusableAnnotationView(withIdentifier: a.reusableIdentifier) ??
-                    MKAnnotationView(annotation: annotation, reuseIdentifier: a.reusableIdentifier)
-                view.image = #imageLiteral(resourceName: "marker_normal")
-                view.canShowCallout = true
-                view.isDraggable = true
-                return view
-            } else {
-                return nil
-            }
-        }
-        
+
         mapView.rx.didAddAnnotationViews.asDriver()
             .drive(onNext: { views in
-                print("Did add \(views.count) annotation views")
                 for v in views {
+                    print("Did add annotation views: \(v.annotation!.title!)")
                     v.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
                     UIView.animate(withDuration: 0.4) { v.transform = CGAffineTransform.identity }
                 }
@@ -108,14 +93,14 @@ class ViewController: UIViewController {
         
         mapView.rx.didSelectAnnotationView.asDriver()
             .drive(onNext: { view in
-                print("Did selected: \(view.annotation!.title)")
+                print("Did selected: \(view.annotation!.title! ?? "")")
                 view.image = #imageLiteral(resourceName: "marker_selected")
             })
             .addDisposableTo(disposeBag)
 
         mapView.rx.didDeselectAnnotationView.asDriver()
             .drive(onNext: { view in
-                print("Did deselected: \(view.annotation!.title)")
+                print("Did deselected: \(view.annotation!.title! ?? "")")
                 view.image = #imageLiteral(resourceName: "marker_normal")
             })
             .addDisposableTo(disposeBag)
@@ -130,7 +115,7 @@ class ViewController: UIViewController {
         
         //mapView.rx.didUpdateUserLocation.asDriver()
         mapView.rx.userLocation.asDriver()
-            .drive(onNext: { print("Did update user location: \($0.location)") })
+            .drive(onNext: { print("Did update user location: \($0.location?.description ?? "")") })
             .addDisposableTo(disposeBag)
         
         mapView.rx.showsUserLocation.asObservable()
@@ -140,22 +125,70 @@ class ViewController: UIViewController {
         mapView.rx.didFailToLocateUser.asDriver()
             .drive(onNext: { print("Did fail to locate user: \($0)") })
             .addDisposableTo(disposeBag)
+        
+        mapView.rx.dragStateOfAnnotationView.asDriver()
+            .drive(onNext: { (view, newState, oldState) in
+                print("Drag state did changed: \(view.annotation!.title!), \(newState.rawValue) <- \(oldState.rawValue)")
+            })
+            .addDisposableTo(disposeBag)
+        
+        
+        mapView.rx.didAddRenderers.asDriver()
+            .drive(onNext: { renderers in
+                for r in renderers { print("Did add renderer: \(r.overlay.title!)") }
+            })
+            .addDisposableTo(disposeBag)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.addMapObjects()
+        }
+    }
+    
+    private func addMapObjects() {
         let center = CLLocationCoordinate2D(latitude: 33.3659424, longitude: 126.3476852)
         let place0 = CLLocationCoordinate2D(latitude: 33.4108625, longitude: 126.391319)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.mapView.addAnnotations([
+        
+        do {
+            mapView.rx.handleViewForAnnotation { (mapView, annotation) in
+                if let _ = annotation as? MKUserLocation {
+                    return nil
+                } else if let a = annotation as? Annotation {
+                    let view = mapView.dequeueReusableAnnotationView(withIdentifier: a.reusableIdentifier) ??
+                        MKAnnotationView(annotation: annotation, reuseIdentifier: a.reusableIdentifier)
+                    view.image = #imageLiteral(resourceName: "marker_normal")
+                    view.canShowCallout = true
+                    view.isDraggable = true
+                    return view
+                } else {
+                    return nil
+                }
+            }
+            mapView.addAnnotations([
                 Annotation(coordinate: center, title: "Hello, RxSwift"),
                 Annotation(coordinate: place0, title: "Hello, MapKit"),
                 ])
         }
+        
+        do {
+            mapView.rx.handleRendererForOverlay { (mapView, overlay) in
+                let renderer = MKCircleRenderer(overlay: overlay)
+                if overlay is MKCircle {
+                    renderer.strokeColor = UIColor.green.withAlphaComponent(0.8)
+                    renderer.lineWidth = 4
+                    renderer.fillColor = UIColor.green.withAlphaComponent(0.3)
+                }
+                return renderer
+            }
+            
+            let circle = MKCircle(center: center, radius: 2000)
+            circle.title = "Circle"
+            mapView.addOverlays([circle])
+        }
     }
-    
 
 }
 

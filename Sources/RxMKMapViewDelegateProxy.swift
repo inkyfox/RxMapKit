@@ -14,6 +14,7 @@ import RxSwift
 import RxCocoa
 
 public typealias RxMKHandleViewForAnnotaion = (MKMapView, MKAnnotation) -> (MKAnnotationView?)
+public typealias RxMKHandleRendererForOverlay = (MKMapView, MKOverlay) -> (MKOverlayRenderer)
 
 public class RxMKMapViewDelegateProxy
     : DelegateProxy
@@ -21,6 +22,7 @@ public class RxMKMapViewDelegateProxy
     , DelegateProxyType {
     
     var handleViewForAnnotation: RxMKHandleViewForAnnotaion? = nil
+    var handleRendererForOverlay: RxMKHandleRendererForOverlay? = nil
 
     /**
      For more information take a look at `DelegateProxyType`.
@@ -45,6 +47,11 @@ extension RxMKMapViewDelegateProxy {
     @objc(mapView:viewForAnnotation:)
     public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         return handleViewForAnnotation?(mapView, annotation)
+    }
+
+    @objc(mapView:rendererForOverlay:)
+    public func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        return handleRendererForOverlay?(mapView, overlay) ?? MKOverlayRenderer(overlay: overlay)
     }
     
 }

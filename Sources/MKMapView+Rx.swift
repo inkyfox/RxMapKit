@@ -49,6 +49,10 @@ extension Reactive where Base: MKMapView {
         delegate.handleViewForAnnotation = closure
     }
 
+    public func handleRendererForOverlay(_ closure: RxMKHandleRendererForOverlay?) {
+        delegate.handleRendererForOverlay = closure
+    }
+
 }
 
 /* MKMapViewDelegate */
@@ -189,6 +193,38 @@ extension Reactive where Base: MKMapView {
      */
     public var didFailToLocateUser: ControlEvent<Error> {
         return controlEventWithParam1(#selector(MKMapViewDelegate.mapView(_:didFailToLocateUserWithError:)))
+    }
+
+    /**
+     Wrapper of: func mapViewWillStartLoadingMap(_ mapView: MKMapView)
+     */
+    public var dragStateOfAnnotationView: ControlEvent<(annotationView: MKAnnotationView, newState: MKAnnotationViewDragState, oldState: MKAnnotationViewDragState)> {
+        return ControlEvent(events:
+            delegate.methodInvoked(#selector(MKMapViewDelegate.mapView(_:annotationView:didChange:fromOldState:)))
+                .map { a in
+                    let annotationView = try castOrThrow(MKAnnotationView.self, a[1])
+                    
+                    guard let newState = MKAnnotationViewDragState(rawValue: try castOrThrow(UInt.self, a[2])) else {
+                        throw RxCocoaError.castingError(object: a[2], targetType: MKAnnotationViewDragState.self)
+                    }
+                    guard let oldState = MKAnnotationViewDragState(rawValue: try castOrThrow(UInt.self, a[3])) else {
+                        throw RxCocoaError.castingError(object: a[3], targetType: MKAnnotationViewDragState.self)
+                    }
+                    
+                    return (annotationView, newState, oldState)
+            }
+        )
+    }
+
+    /**
+     Wrapper of: func mapView(_ mapView: MKMapView, didAdd renderers: [MKOverlayRenderer])
+     */
+    public var didAddRenderers: ControlEvent<[MKOverlayRenderer]> {
+        return ControlEvent(events:
+            methodInvokedWithParam1(#selector(
+                MKMapViewDelegate.mapView(_:didAdd:)!
+                    as (MKMapViewDelegate) -> (MKMapView, [MKOverlayRenderer]) -> Void))
+        )
     }
 
 }
