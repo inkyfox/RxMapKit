@@ -229,7 +229,61 @@ extension Reactive where Base: MKMapView {
 
 }
 
-/* MKMapView */
+/* MKMapView: Visible Portion */
+
+extension Reactive where Base: MKMapView {
+
+    public var region: AnyObserver<MKCoordinateRegion> {
+        return UIBindingObserver(UIElement: base) { control, region in
+                   control.region = region
+               }.asObserver()
+    }
+    
+    public var regionToAnimate: AnyObserver<MKCoordinateRegion> {
+        return UIBindingObserver(UIElement: base) { control, region in
+                    control.setRegion(region, animated: true)
+               }.asObserver()
+    }
+
+    public var center: AnyObserver<CLLocationCoordinate2D> {
+        return UIBindingObserver(UIElement: base) { control, centerCoordinate in
+                   control.centerCoordinate = centerCoordinate
+               }.asObserver()
+    }
+    
+    public var centerToAnimate: AnyObserver<CLLocationCoordinate2D> {
+        return UIBindingObserver(UIElement: base) { control, centerCoordinate in
+                   control.setCenter(centerCoordinate, animated: true)
+               }.asObserver()
+    }
+    
+    public var visibleMapRect: AnyObserver<MKMapRect> {
+        return UIBindingObserver(UIElement: base) { control, visibleMapRect in
+                   control.visibleMapRect = visibleMapRect
+               }.asObserver()
+    }
+    
+    public var visibleMapRectToAnimate: AnyObserver<MKMapRect> {
+        return UIBindingObserver(UIElement: base) { control, visibleMapRect in
+                   control.setVisibleMapRect(visibleMapRect, animated: true)
+               }.asObserver()
+    }
+
+    public var camera: AnyObserver<MKMapCamera> {
+        return UIBindingObserver(UIElement: base) { control, camera in
+                   control.camera = camera
+               }.asObserver()
+    }
+    
+    public var cameraToAnimate: AnyObserver<MKMapCamera> {
+        return UIBindingObserver(UIElement: base) { control, camera in
+                   control.setCamera(camera, animated: true)
+               }.asObserver()
+    }
+    
+}
+
+/* MKMapView: User’s Location */
 
 extension Reactive where Base: MKMapView {
     
@@ -256,6 +310,7 @@ extension Reactive where Base: MKMapView {
             control.setUserTrackingMode(userTrackingMode, animated: true)
         }.asObserver()
     }
+
 }
 
 public struct RxMKAnimatedProperty {

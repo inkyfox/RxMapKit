@@ -57,7 +57,7 @@ class ViewController: UIViewController {
             .drive(onNext: { print("Will region change: isAnimated \($0.isAnimated)") })
             .addDisposableTo(disposeBag)
         
-        mapView.rx.regionWillChange.asDriver()
+        mapView.rx.regionDidChange.asDriver()
             .drive(onNext: { print("Did region change: isAnimated \($0.isAnimated)") })
             .addDisposableTo(disposeBag)
         
@@ -132,12 +132,12 @@ class ViewController: UIViewController {
             })
             .addDisposableTo(disposeBag)
         
-        
         mapView.rx.didAddRenderers.asDriver()
             .drive(onNext: { renderers in
                 for r in renderers { print("Did add renderer: \(r.overlay.title!)") }
             })
             .addDisposableTo(disposeBag)
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -188,6 +188,10 @@ class ViewController: UIViewController {
             circle.title = "Circle"
             mapView.addOverlays([circle])
         }
+
+        Observable.just(MKMapCamera(lookingAtCenter: center, fromDistance: 50000, pitch: 30, heading: 45))
+            .bindTo(mapView.rx.cameraToAnimate)
+            .addDisposableTo(disposeBag)
     }
 
 }
