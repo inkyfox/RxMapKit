@@ -41,6 +41,8 @@ extension Reactive where Base: MKMapView {
     }
 }
 
+/* MKMapViewDelegate */
+
 extension Reactive where Base: MKMapView {
 
     public func handleViewForAnnotation(_ closure: RxMKHandleViewForAnnotaion?) {
@@ -48,6 +50,8 @@ extension Reactive where Base: MKMapView {
     }
 
 }
+
+/* MKMapViewDelegate */
 
 extension Reactive where Base: MKMapView {
     
@@ -153,7 +157,69 @@ extension Reactive where Base: MKMapView {
         return controlEventWithParam1(#selector(MKMapViewDelegate.mapView(_:didDeselect:)))
     }
 
+    /**
+     Wrapper of: func mapViewWillStartLocatingUser(_ mapView: MKMapView)
+     */
+    public var willStartLocatingUser: ControlEvent<Void> {
+        return ControlEvent(events:
+            delegate.methodInvoked(#selector(MKMapViewDelegate.mapViewWillStartLocatingUser(_:)))
+                .map { _ in return }
+        )
+    }
+    
+    /**
+     Wrapper of: func mapViewDidStopLocatingUser(_ mapView: MKMapView)
+     */
+    public var didStopLocatingUser: ControlEvent<Void> {
+        return ControlEvent(events:
+            delegate.methodInvoked(#selector(MKMapViewDelegate.mapViewDidStopLocatingUser(_:)))
+                .map { _ in return }
+        )
+    }
+    
+    /**
+     Wrapper of: func mapViewDidFailLoadingMap(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation)
+     */
+    public var didUpdateUserLocation: ControlEvent<MKUserLocation> {
+        return controlEventWithParam1(#selector(MKMapViewDelegate.mapView(_:didUpdate:)))
+    }
+    
+    /**
+     Wrapper of: func mapView(_ mapView: MKMapView, didFailToLocateUserWithError error: Error)
+     */
+    public var didFailToLocateUser: ControlEvent<Error> {
+        return controlEventWithParam1(#selector(MKMapViewDelegate.mapView(_:didFailToLocateUserWithError:)))
+    }
 
+}
+
+/* MKMapView */
+
+extension Reactive where Base: MKMapView {
+    
+    public var showsUserLocation: ControlProperty<Bool> {
+        return ControlProperty(values: observeWeakly(Bool.self, "showsUserLocation").filter { $0 != nil }.map { $0! },
+                               valueSink: UIBindingObserver(UIElement: base) { control, showsUserLocation in
+                                    control.showsUserLocation = showsUserLocation
+                                }.asObserver()
+        )
+    }
+    
+    public var userLocation: ControlEvent<MKUserLocation> {
+        return didUpdateUserLocation
+    }
+
+    public var userTrackingMode: AnyObserver<MKUserTrackingMode> {
+        return UIBindingObserver(UIElement: base) { control, userTrackingMode in
+            control.userTrackingMode = userTrackingMode
+        }.asObserver()
+    }
+    
+    public var userTrackingModeToAnimate: AnyObserver<MKUserTrackingMode> {
+        return UIBindingObserver(UIElement: base) { control, userTrackingMode in
+            control.setUserTrackingMode(userTrackingMode, animated: true)
+        }.asObserver()
+    }
 }
 
 public struct RxMKAnimatedProperty {

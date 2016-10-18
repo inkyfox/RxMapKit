@@ -25,15 +25,34 @@ class Annotation: NSObject, MKAnnotation {
     }
 }
 
+prefix func !(b: Bool?) -> Bool? { return b != nil ? !b! : nil }
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var actionButton0: UIButton!
+    @IBOutlet weak var actionButton1: UIButton!
+    @IBOutlet weak var locationButton: UIButton!
     
     let disposeBag = DisposeBag()
+    let locationManager = CLLocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        locationButton.rx.tap
+            .map { [weak self] in !self?.locationButton.isSelected ?? false }
+            .bindTo(locationButton.rx.selected)
+            .addDisposableTo(disposeBag)
+
+        let track = locationButton.rx.observe(Bool.self, "selected")
+            .filter { $0 != nil }.map { $0! }.publish()
+        _ = track.filter { $0 }.take(1)
+            .subscribe(onNext: { [weak self] _ in self?.locationManager.requestWhenInUseAuthorization() })
+        _ = track.bindTo(mapView.rx.showsUserLocation.asObserver())
+        _ = track.map { $0 ? .follow : .none }.bindTo(mapView.rx.userTrackingModeToAnimate)
+        track.connect().addDisposableTo(disposeBag)
+        
         mapView.rx.regionWillChange.asDriver()
             .drive(onNext: { print("Will region change: isAnimated \($0.isAnimated)") })
             .addDisposableTo(disposeBag)
@@ -100,7 +119,27 @@ class ViewController: UIViewController {
                 view.image = #imageLiteral(resourceName: "marker_normal")
             })
             .addDisposableTo(disposeBag)
+        
+        mapView.rx.willStartLocatingUser.asDriver()
+            .drive(onNext: { print("Will start locating user") })
+            .addDisposableTo(disposeBag)
+        
+        mapView.rx.didStopLocatingUser.asDriver()
+            .drive(onNext: { print("Did stop locating user") })
+            .addDisposableTo(disposeBag)
+        
+        //mapView.rx.didUpdateUserLocation.asDriver()
+        mapView.rx.userLocation.asDriver()
+            .drive(onNext: { print("Did update user location: \($0.location)") })
+            .addDisposableTo(disposeBag)
+        
+        mapView.rx.showsUserLocation.asObservable()
+            .subscribe(onNext: { print("Shows user location: \($0)") })
+            .addDisposableTo(disposeBag)
 
+        mapView.rx.didFailToLocateUser.asDriver()
+            .drive(onNext: { print("Did fail to locate user: \($0)") })
+            .addDisposableTo(disposeBag)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -115,8 +154,6 @@ class ViewController: UIViewController {
                 Annotation(coordinate: place0, title: "Hello, MapKit"),
                 ])
         }
-
-        
     }
     
 
