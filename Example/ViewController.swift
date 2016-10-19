@@ -175,15 +175,16 @@ class ViewController: UIViewController {
         
         do {
             mapView.rx.handleRendererForOverlay { (mapView, overlay) in
-                let renderer = MKCircleRenderer(overlay: overlay)
                 if overlay is MKCircle {
+                    let renderer = MKCircleRenderer(overlay: overlay)
                     renderer.strokeColor = UIColor.green.withAlphaComponent(0.8)
                     renderer.lineWidth = 4
                     renderer.fillColor = UIColor.green.withAlphaComponent(0.3)
+                    return renderer
+                } else {
+                    return MKOverlayRenderer(overlay: overlay)
                 }
-                return renderer
             }
-            
             let circle = MKCircle(center: center, radius: 2000)
             circle.title = "Circle"
             mapView.addOverlays([circle])
