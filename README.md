@@ -126,6 +126,10 @@ pod 'RxMapKit'
 - [RxSwift](https://github.com/ReactiveX/RxSwift) 3.0.0-beta.2
 - [RxCocoa](https://github.com/ReactiveX/RxSwift) 3.0.0-beta.2
 
+## Author
+
+[Yongha Yoo](http://inkyfox.oo-v.com)
+
 ## License
 
 MIT
