@@ -317,16 +317,87 @@ extension Reactive where Base: MKMapView {
 
     public var userTrackingMode: AnyObserver<MKUserTrackingMode> {
         return UIBindingObserver(UIElement: base) { control, userTrackingMode in
-            control.userTrackingMode = userTrackingMode
-        }.asObserver()
+                   control.userTrackingMode = userTrackingMode
+               }.asObserver()
     }
     
     public var userTrackingModeToAnimate: AnyObserver<MKUserTrackingMode> {
         return UIBindingObserver(UIElement: base) { control, userTrackingMode in
-            control.setUserTrackingMode(userTrackingMode, animated: true)
-        }.asObserver()
+                   control.setUserTrackingMode(userTrackingMode, animated: true)
+               }.asObserver()
     }
 
+}
+
+/* MKMapView: Map properties */
+
+extension Reactive where Base: MKMapView {
+    
+    public var mapType: AnyObserver<MKMapType> {
+        return UIBindingObserver(UIElement: base) { control, mapType in
+                  control.mapType = mapType
+               }.asObserver()
+    }
+    
+    public var isZoomEnabled: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: base) { control, isZoomEnabled in
+                   control.isZoomEnabled = isZoomEnabled
+               }.asObserver()
+    }
+    
+    public var isScrollEnabled: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: base) { control, isScrollEnabled in
+                   control.isScrollEnabled = isScrollEnabled
+               }.asObserver()
+    }
+    
+    public var isRotateEnabled: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: base) { control, isRotateEnabled in
+                   control.isRotateEnabled = isRotateEnabled
+               }.asObserver()
+    }
+    
+    public var isPitchEnabled: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: base) { control, isPitchEnabled in
+                   control.isPitchEnabled = isPitchEnabled
+               }.asObserver()
+    }
+    
+    @available(iOS 9.0, *)
+    public var showsCompass: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: base) { control, showsCompass in
+                   control.showsCompass = showsCompass
+               }.asObserver()
+    }
+    
+    @available(iOS 9.0, *)
+    public var showsScale: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: base) { control, showsScale in
+                   control.showsScale = showsScale
+               }.asObserver()
+    }
+    
+    @available(iOS 9.0, *)
+    public var showsPointsOfInterest: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: base) { control, showsPointsOfInterest in
+                   control.showsPointsOfInterest = showsPointsOfInterest
+               }.asObserver()
+    }
+    
+    @available(iOS 9.0, *)
+    public var showsBuildings: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: base) { control, showsBuildings in
+                   control.showsBuildings = showsBuildings
+               }.asObserver()
+    }
+    
+    @available(iOS 9.0, *)
+    public var showsTraffic: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: base) { control, showsTraffic in
+                   control.showsTraffic = showsTraffic
+               }.asObserver()
+    }
+    
 }
 
 public struct RxMKAnimatedProperty {

@@ -193,6 +193,9 @@ class ViewController: UIViewController {
         Observable.just(MKMapCamera(lookingAtCenter: center, fromDistance: 50000, pitch: 30, heading: 45))
             .bindTo(mapView.rx.cameraToAnimate)
             .addDisposableTo(disposeBag)
+        
+        //actionButton0.rx.tap.map { .satellite }.bindTo(mapView.rx.mapType).addDisposableTo(disposeBag)
+        //actionButton1.rx.tap.map { false }.bindTo(mapView.rx.isZoomEnabled).addDisposableTo(disposeBag)
     }
 
 }
