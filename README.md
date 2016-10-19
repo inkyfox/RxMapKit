@@ -1,5 +1,6 @@
 # RxMapKit
 ![Swift](https://img.shields.io/badge/Swift-3.0-orange.svg)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](https://img.shields.io/cocoapods/v/RxMapKit.svg?style=flat)](http://cocoapods.org/pods/RxMapKit)
 [![License](https://img.shields.io/cocoapods/l/RxMapKit.svg?style=flat)](http://cocoapods.org/pods/RxMapKit)
 [![Platform](https://img.shields.io/cocoapods/p/RxMapKit.svg?style=flat)](http://cocoapods.org/pods/RxMapKit)
@@ -120,11 +121,16 @@ mapView.rx.handleRendererForOverlay { (mapView, overlay) in
 pod 'RxMapKit'
 ```
 
+### Carthage
+```
+github "inkyfox/RxMapKit"
+```
+
 ## Requirements
 
 - Swift 3.0
-- [RxSwift](https://github.com/ReactiveX/RxSwift) 3.0.0-beta.2
-- [RxCocoa](https://github.com/ReactiveX/RxSwift) 3.0.0-beta.2
+- [RxSwift](https://github.com/ReactiveX/RxSwift) 3.0.0-rc.1
+- [RxCocoa](https://github.com/ReactiveX/RxSwift) 3.0.0-rc.1
 
 ## Author
 
