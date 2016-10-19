@@ -257,6 +257,18 @@ extension Reactive where Base: MKMapView {
                }.asObserver()
     }
     
+    public var annotationsToShow: AnyObserver<[MKAnnotation]> {
+        return UIBindingObserver(UIElement: base) { control, annotationsToShow in
+                   control.showAnnotations(annotationsToShow, animated: false)
+               }.asObserver()
+    }
+    
+    public var annotationsToShowToAnimate: AnyObserver<[MKAnnotation]> {
+        return UIBindingObserver(UIElement: base) { control, annotationsToShow in
+                   control.showAnnotations(annotationsToShow, animated: true)
+               }.asObserver()
+    }
+    
     public var visibleMapRect: AnyObserver<MKMapRect> {
         return UIBindingObserver(UIElement: base) { control, visibleMapRect in
                    control.visibleMapRect = visibleMapRect
