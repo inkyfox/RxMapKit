@@ -82,10 +82,14 @@ extension Reactive where Base: MKMapView {
     /**
      Wrapper of: func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool)
      */
-    public var regionDidChange: ControlEvent<RxMKAnimatedProperty> {
+    public var regionDidChange: ControlEvent<(region: MKCoordinateRegion, isAnimated: Bool)> {
         return ControlEvent(events:
             methodInvokedWithParam1(#selector(MKMapViewDelegate.mapView(_:regionDidChangeAnimated:)))
-                .map(RxMKAnimatedProperty.init)
+                .map { [weak base] (isAnimated) -> (region: MKCoordinateRegion?, isAnimated: Bool) in
+                    return (base?.region, isAnimated)
+                }
+                .filter { $0.0 != nil }
+                .map { (region: $0.0!, isAnimated: $0.1) }
         )
     }
     

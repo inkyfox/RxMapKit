@@ -58,7 +58,7 @@ class ViewController: UIViewController {
             .addDisposableTo(disposeBag)
         
         mapView.rx.regionDidChange.asDriver()
-            .drive(onNext: { print("Did region change: isAnimated \($0.isAnimated)") })
+            .drive(onNext: { print("Did region change: \($0.region) isAnimated \($0.isAnimated)") })
             .addDisposableTo(disposeBag)
         
         mapView.rx.willStartLoadingMap.asDriver()
