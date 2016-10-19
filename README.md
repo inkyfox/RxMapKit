@@ -1,5 +1,8 @@
 # RxMapKit
 ![Swift](https://img.shields.io/badge/Swift-3.0-orange.svg)
+[![Version](https://img.shields.io/cocoapods/v/RxMapKit.svg?style=flat)](http://cocoapods.org/pods/RxMapKit)
+[![License](https://img.shields.io/cocoapods/l/RxMapKit.svg?style=flat)](http://cocoapods.org/pods/RxMapKit)
+[![Platform](https://img.shields.io/cocoapods/p/RxMapKit.svg?style=flat)](http://cocoapods.org/pods/RxMapKit)
 
 
 RxMapKit is a [RxSwift](https://github.com/ReactiveX/RxSwift) wrapper for [MapKit](https://developer.apple.com/reference/mapkit)
