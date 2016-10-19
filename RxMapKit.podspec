@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxMapKit"
-  s.version          = "1.0.0"
+  s.version          = "1.0.1"
   s.summary          = "RxSwift reactive wrapper for MapKit."
   s.description      = <<-DESC
 # RxMapKit
@@ -114,9 +114,21 @@ mapView.rx.handleRendererForOverlay { (mapView, overlay) in
 
 ```
 
+## Installation
+
+### CocoaPods
+
+```Ruby
+pod 'RxMapKit'
+```
+
 ## Requirements
 
 RxMapKit requires Swift 3.0 and dedicated versions of RxSwift 3.0.0-beta.2 (Xcode8+ and iOS8+)
+
+## Author
+
+[Yongha Yoo](http://inkyfox.oo-v.com)
 
 ## License
 
