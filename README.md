@@ -116,13 +116,15 @@ mapView.rx.handleRendererForOverlay { (mapView, overlay) in
 
 ### CocoaPods
 
-```
+```Ruby
 pod 'RxMapKit'
 ```
 
 ## Requirements
 
-RxMapKit requires Swift 3.0 and dedicated versions of RxSwift 3.0.0-beta.2 (Xcode8+ and iOS8+)
+- Swift 3.0
+- [RxSwift](https://github.com/ReactiveX/RxSwift) 3.0.0-beta.2
+- [RxCocoa](https://github.com/ReactiveX/RxSwift) 3.0.0-beta.2
 
 ## License
 
