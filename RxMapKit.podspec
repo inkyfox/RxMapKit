@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxMapKit"
-  s.version          = "1.0.2"
+  s.version          = "1.0.3"
   s.summary          = "RxSwift reactive wrapper for MapKit."
   s.homepage         = "https://github.com/inkyfox/RxMapKit"
   s.license          = 'MIT'
@@ -10,8 +10,8 @@ Pod::Spec.new do |s|
   s.requires_arc          = true
   s.ios.deployment_target = '8.0'
   s.source_files          = 'Sources/*.swift'
-  s.dependency 'RxSwift', '~> 3.0.0-rc.1'
-  s.dependency 'RxCocoa', '~> 3.0.0-rc.1'
+  s.dependency 'RxSwift', '~> 3.0.0'
+  s.dependency 'RxCocoa', '~> 3.0.0'
   s.pod_target_xcconfig = {
     'SWIFT_VERSION' => '3.0'
   }

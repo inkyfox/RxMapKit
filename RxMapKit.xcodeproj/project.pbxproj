@@ -30,6 +30,7 @@
 		A96B8DB41DB78DBB003BB7B6 /* RxMKMapViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxMKMapViewDelegateProxy.swift; path = Sources/RxMKMapViewDelegateProxy.swift; sourceTree = SOURCE_ROOT; };
 		A96B8DB71DB79A11003BB7B6 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = SOURCE_ROOT; };
 		A96B8DB81DB79A11003BB7B6 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = SOURCE_ROOT; };
+		A96B8DBB1DB79F86003BB7B6 /* RxMapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxMapKit.framework; path = ../CarthagePlay/Carthage/Build/iOS/RxMapKit.framework; sourceTree = "<group>"; };
 		A97879721DB482FA00E5121B /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A97879751DB482FA00E5121B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A97879771DB482FA00E5121B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -122,6 +123,7 @@
 		AA326E058D066BDDA51499D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A96B8DBB1DB79F86003BB7B6 /* RxMapKit.framework */,
 				A97879871DB48AE100E5121B /* MapKit.framework */,
 				DABE9893B0582CB850E52ABB /* Pods_Example.framework */,
 			);

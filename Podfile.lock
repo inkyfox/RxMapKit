@@ -1,10 +1,10 @@
 PODS:
-  - RxCocoa (3.0.0-rc.1):
-    - RxSwift (~> 3.0.0-rc.1)
-  - RxMapKit (1.0.2):
-    - RxCocoa (~> 3.0.0-rc.1)
-    - RxSwift (~> 3.0.0-rc.1)
-  - RxSwift (3.0.0-rc.1)
+  - RxCocoa (3.0.0):
+    - RxSwift (~> 3.0)
+  - RxMapKit (1.0.3):
+    - RxCocoa (~> 3.0.0)
+    - RxSwift (~> 3.0.0)
+  - RxSwift (3.0.0)
 
 DEPENDENCIES:
   - RxCocoa (~> 3.0.0-beta.2)
@@ -16,9 +16,9 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  RxCocoa: e72a074a7f38896ec0382d096df5f58df10115c7
-  RxMapKit: 0f5c087807bfc68ac40992f54846eaa0254b1af2
-  RxSwift: d7a3819dd71789c473e3cbf1a0c02d58b2692739
+  RxCocoa: 0a2f3ae381cf16f4021a4cee7a4420f83058a965
+  RxMapKit: 38539c9a4df39e2ef23a68ab2674ef7599a194b6
+  RxSwift: a930cd662f5b4a7ca9dc3518585dba91dadf497c
 
 PODFILE CHECKSUM: 8b7dec3761418bb50da61e62fd190b245dc95a01
 
