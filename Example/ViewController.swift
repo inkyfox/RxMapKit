@@ -42,7 +42,7 @@ class ViewController: UIViewController {
 
         locationButton.rx.tap
             .map { [weak self] in !self?.locationButton.isSelected ?? false }
-            .bindTo(locationButton.rx.selected)
+            .bindTo(locationButton.rx.isSelected)
             .addDisposableTo(disposeBag)
 
         let track = locationButton.rx.observe(Bool.self, "selected")
