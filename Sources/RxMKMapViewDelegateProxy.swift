@@ -17,17 +17,22 @@ public typealias RxMKHandleViewForAnnotaion = (MKMapView, MKAnnotation) -> (MKAn
 public typealias RxMKHandleRendererForOverlay = (MKMapView, MKOverlay) -> (MKOverlayRenderer)
 
 public class RxMKMapViewDelegateProxy
-    : DelegateProxy
+    : DelegateProxy<MKMapView, MKMapViewDelegate>
     , MKMapViewDelegate
     , DelegateProxyType {
+    
     
     var handleViewForAnnotation: RxMKHandleViewForAnnotaion? = nil
     var handleRendererForOverlay: RxMKHandleRendererForOverlay? = nil
 
+    public init(mapView: MKMapView) {
+        super.init(parentObject: mapView, delegateProxy: RxMKMapViewDelegateProxy.self)
+    }
+    
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
+    public class func setCurrentDelegate(_ delegate: MKMapViewDelegate?, to object: MKMapView) {
         let mapView: MKMapView = castOrFatalError(object)
         mapView.delegate = castOptionalOrFatalError(delegate)
     }
@@ -35,25 +40,24 @@ public class RxMKMapViewDelegateProxy
     /**
      For more information take a look at `DelegateProxyType`.
      */
-    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
+    public class func currentDelegate(for object: MKMapView) -> MKMapViewDelegate? {
         let mapView: MKMapView = castOrFatalError(object)
         return mapView.delegate
     }
     
-}
-
-extension RxMKMapViewDelegateProxy {
+    // Register known implementations
+    public static func registerKnownImplementations() {
+        self.register { RxMKMapViewDelegateProxy(mapView: $0) }
+    }
     
-    @objc(mapView:viewForAnnotation:)
     public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         return handleViewForAnnotation?(mapView, annotation)
     }
-
-    @objc(mapView:rendererForOverlay:)
+    
     public func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         return handleRendererForOverlay?(mapView, overlay) ?? MKOverlayRenderer(overlay: overlay)
     }
-    
+
 }
 
 // Referred from RxCococa.swift because it's not public

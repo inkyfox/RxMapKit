@@ -23,7 +23,7 @@ extension Reactive where Base: MKMapView {
      For more information take a look at `DelegateProxyType` protocol documentation.
      */
     public var delegate: RxMKMapViewDelegateProxy {
-        return RxMKMapViewDelegateProxy.proxyForObject(base)
+        return RxMKMapViewDelegateProxy.proxy(for: base)
     }
 
     /**
