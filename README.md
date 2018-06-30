@@ -1,5 +1,5 @@
 # RxMapKit
-![Swift](https://img.shields.io/badge/Swift-3.0-orange.svg)
+![Swift](https://img.shields.io/badge/Swift-4.1-orange.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](https://img.shields.io/cocoapods/v/RxMapKit.svg?style=flat)](http://cocoapods.org/pods/RxMapKit)
 [![License](https://img.shields.io/cocoapods/l/RxMapKit.svg?style=flat)](http://cocoapods.org/pods/RxMapKit)
@@ -128,9 +128,9 @@ github "inkyfox/RxMapKit"
 
 ## Requirements
 
-- Swift 3.0
-- [RxSwift](https://github.com/ReactiveX/RxSwift) 3.0.0-rc.1
-- [RxCocoa](https://github.com/ReactiveX/RxSwift) 3.0.0-rc.1
+- Swift 4.1
+- [RxSwift](https://github.com/ReactiveX/RxSwift) 4.2
+- [RxCocoa](https://github.com/ReactiveX/RxSwift) 4.2
 
 ## Author
 
