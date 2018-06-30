@@ -42,101 +42,100 @@ class ViewController: UIViewController {
 
         locationButton.rx.tap
             .map { [weak self] in !self?.locationButton.isSelected ?? false }
-            .bindTo(locationButton.rx.isSelected)
-            .addDisposableTo(disposeBag)
+            .bind(to: locationButton.rx.isSelected)
+            .disposed(by: disposeBag)
 
         let track = locationButton.rx.observe(Bool.self, "selected")
             .filter { $0 != nil }.map { $0! }.publish()
         _ = track.filter { $0 }.take(1)
             .subscribe(onNext: { [weak self] _ in self?.locationManager.requestWhenInUseAuthorization() })
-        _ = track.bindTo(mapView.rx.showsUserLocation.asObserver())
-        _ = track.map { $0 ? .follow : .none }.bindTo(mapView.rx.userTrackingModeToAnimate)
-        track.connect().addDisposableTo(disposeBag)
+        _ = track.bind(to: mapView.rx.showsUserLocation.asObserver())
+        _ = track.map { $0 ? .follow : .none }.bind(to: mapView.rx.userTrackingModeToAnimate)
+        track.connect().disposed(by: disposeBag)
         
         mapView.rx.regionWillChange.asDriver()
             .drive(onNext: { print("Will region change: isAnimated \($0.isAnimated)") })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         mapView.rx.regionDidChange.asDriver()
             .drive(onNext: { print("Did region change: \($0.region) isAnimated \($0.isAnimated)") })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         mapView.rx.willStartLoadingMap.asDriver()
             .drive(onNext: { print("Will start loading map") })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         mapView.rx.didFinishLoadingMap.asDriver()
             .drive(onNext: { print("Did finish loading map") })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         mapView.rx.didFailLoadingMap.asDriver()
             .drive(onNext: { print("Did fail loading map with error: \($0)") })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         mapView.rx.willStartRenderingMap.asDriver()
             .drive(onNext: { print("Will start rendering map") })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         mapView.rx.didFinishRenderingMap.asDriver()
             .drive(onNext: { print("Did finish rendering map: fully rendered \($0.isFullyRendered)") })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         mapView.rx.didAddAnnotationViews.asDriver()
             .drive(onNext: { views in
                 for v in views {
-                    print("Did add annotation views: \(v.annotation!.title!)")
+                    print("Did add annotation views: \(v.annotation!.title! ?? "unknown")")
                     v.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
                     UIView.animate(withDuration: 0.4) { v.transform = CGAffineTransform.identity }
                 }
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         mapView.rx.didSelectAnnotationView.asDriver()
             .drive(onNext: { view in
                 print("Did selected: \(view.annotation!.title! ?? "")")
                 view.image = #imageLiteral(resourceName: "marker_selected")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         mapView.rx.didDeselectAnnotationView.asDriver()
             .drive(onNext: { view in
                 print("Did deselected: \(view.annotation!.title! ?? "")")
                 view.image = #imageLiteral(resourceName: "marker_normal")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         mapView.rx.willStartLocatingUser.asDriver()
             .drive(onNext: { print("Will start locating user") })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         mapView.rx.didStopLocatingUser.asDriver()
             .drive(onNext: { print("Did stop locating user") })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         //mapView.rx.didUpdateUserLocation.asDriver()
         mapView.rx.userLocation.asDriver()
             .drive(onNext: { print("Did update user location: \($0.location?.description ?? "")") })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         mapView.rx.showsUserLocation.asObservable()
             .subscribe(onNext: { print("Shows user location: \($0)") })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         mapView.rx.didFailToLocateUser.asDriver()
-            .drive(onNext: { print("Did fail to locate user: \($0)") })
-            .addDisposableTo(disposeBag)
+            .drive(onNext: { print("Did fail to locate user: \($0)") })            .disposed(by: disposeBag)
         
         mapView.rx.dragStateOfAnnotationView.asDriver()
             .drive(onNext: { (view, newState, oldState) in
-                print("Drag state did changed: \(view.annotation!.title!), \(newState.rawValue) <- \(oldState.rawValue)")
+                print("Drag state did changed: \(view.annotation!.title! ?? "unknown"), \(newState.rawValue) <- \(oldState.rawValue)")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         mapView.rx.didAddRenderers.asDriver()
             .drive(onNext: { renderers in
-                for r in renderers { print("Did add renderer: \(r.overlay.title!)") }
+                for r in renderers { print("Did add renderer: \(r.overlay.title! ?? "unknown")") }
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
     }
 
@@ -191,11 +190,11 @@ class ViewController: UIViewController {
         }
 
         Observable.just(MKMapCamera(lookingAtCenter: center, fromDistance: 50000, pitch: 30, heading: 45))
-            .bindTo(mapView.rx.cameraToAnimate)
-            .addDisposableTo(disposeBag)
+            .bind(to: mapView.rx.cameraToAnimate)
+            .disposed(by: disposeBag)
         
-        //actionButton0.rx.tap.map { .satellite }.bindTo(mapView.rx.mapType).addDisposableTo(disposeBag)
-        //actionButton1.rx.tap.map { false }.bindTo(mapView.rx.isZoomEnabled).addDisposableTo(disposeBag)
+        //actionButton0.rx.tap.map { .satellite }.bind(to: mapView.rx.mapType).disposed(by: disposeBag)
+        actionButton1.rx.tap.map { false }.bind(to: mapView.rx.isZoomEnabled).disposed(by: disposeBag)
     }
 
 }

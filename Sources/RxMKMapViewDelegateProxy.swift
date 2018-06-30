@@ -16,33 +16,32 @@ import RxCocoa
 public typealias RxMKHandleViewForAnnotaion = (MKMapView, MKAnnotation) -> (MKAnnotationView?)
 public typealias RxMKHandleRendererForOverlay = (MKMapView, MKOverlay) -> (MKOverlayRenderer)
 
-public class RxMKMapViewDelegateProxy
-    : DelegateProxy
-    , MKMapViewDelegate
-    , DelegateProxyType {
-    
-    var handleViewForAnnotation: RxMKHandleViewForAnnotaion? = nil
-    var handleRendererForOverlay: RxMKHandleRendererForOverlay? = nil
-
-    /**
-     For more information take a look at `DelegateProxyType`.
-     */
-    public class func setCurrentDelegate(_ delegate: AnyObject?, toObject object: AnyObject) {
-        let mapView: MKMapView = castOrFatalError(object)
-        mapView.delegate = castOptionalOrFatalError(delegate)
-    }
-    
-    /**
-     For more information take a look at `DelegateProxyType`.
-     */
-    public class func currentDelegateFor(_ object: AnyObject) -> AnyObject? {
-        let mapView: MKMapView = castOrFatalError(object)
-        return mapView.delegate
-    }
-    
+extension MKMapView: HasDelegate {
+    public typealias Delegate = MKMapViewDelegate
 }
 
-extension RxMKMapViewDelegateProxy {
+public class RxMKMapViewDelegateProxy
+    : DelegateProxy<MKMapView, MKMapViewDelegate>
+    , DelegateProxyType
+    , MKMapViewDelegate {
+    
+    //#MARK: DelegateProxy
+    
+    public weak private(set) var mapView: MKMapView?
+
+    init(mapView: MKMapView) {
+        self.mapView = mapView
+        super.init(parentObject: mapView, delegateProxy: RxMKMapViewDelegateProxy.self)
+    }
+    
+    public static func registerKnownImplementations() {
+        self.register { RxMKMapViewDelegateProxy(mapView: $0) }
+    }
+    
+    //#MARK: Delegate
+
+    var handleViewForAnnotation: RxMKHandleViewForAnnotaion? = nil
+    var handleRendererForOverlay: RxMKHandleRendererForOverlay? = nil
     
     @objc(mapView:viewForAnnotation:)
     public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
