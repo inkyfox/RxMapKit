@@ -203,17 +203,17 @@ extension Reactive where Base: MKMapView {
     /**
      Wrapper of: func mapViewWillStartLoadingMap(_ mapView: MKMapView)
      */
-    public var dragStateOfAnnotationView: ControlEvent<(annotationView: MKAnnotationView, newState: MKAnnotationViewDragState, oldState: MKAnnotationViewDragState)> {
+    public var dragStateOfAnnotationView: ControlEvent<(annotationView: MKAnnotationView, newState: MKAnnotationView.DragState, oldState: MKAnnotationView.DragState)> {
         return ControlEvent(events:
             delegate.methodInvoked(#selector(MKMapViewDelegate.mapView(_:annotationView:didChange:fromOldState:)))
                 .map { a in
                     let annotationView = try castOrThrow(MKAnnotationView.self, a[1])
                     
-                    guard let newState = MKAnnotationViewDragState(rawValue: try castOrThrow(UInt.self, a[2])) else {
-                        throw RxCocoaError.castingError(object: a[2], targetType: MKAnnotationViewDragState.self)
+                    guard let newState = MKAnnotationView.DragState(rawValue: try castOrThrow(UInt.self, a[2])) else {
+                        throw RxCocoaError.castingError(object: a[2], targetType: MKAnnotationView.DragState.self)
                     }
-                    guard let oldState = MKAnnotationViewDragState(rawValue: try castOrThrow(UInt.self, a[3])) else {
-                        throw RxCocoaError.castingError(object: a[3], targetType: MKAnnotationViewDragState.self)
+                    guard let oldState = MKAnnotationView.DragState(rawValue: try castOrThrow(UInt.self, a[3])) else {
+                        throw RxCocoaError.castingError(object: a[3], targetType: MKAnnotationView.DragState.self)
                     }
                     
                     return (annotationView, newState, oldState)
