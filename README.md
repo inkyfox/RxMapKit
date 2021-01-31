@@ -1,5 +1,5 @@
 # RxMapKit
-![Swift](https://img.shields.io/badge/Swift-4.1-orange.svg)
+![Swift](https://img.shields.io/badge/Swift-5-orange.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](https://img.shields.io/cocoapods/v/RxMapKit.svg?style=flat)](http://cocoapods.org/pods/RxMapKit)
 [![License](https://img.shields.io/cocoapods/l/RxMapKit.svg?style=flat)](http://cocoapods.org/pods/RxMapKit)
