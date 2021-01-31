@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  RxMapKit
 //
-//  Created by indy on 2016. 10. 17..
-//  Copyright © 2016년 Gen X Hippies Company. All rights reserved.
+//  Created by 350116542@qq.com on 01/31/2021.
+//  Copyright (c) 2021 350116542@qq.com. All rights reserved.
 //
 
 import UIKit

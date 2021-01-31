@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1240"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A96B8DAA1DB78DA1003BB7B6"
-               BuildableName = "RxMapKit.framework"
-               BlueprintName = "RxMapKit"
+               BlueprintIdentifier = "607FACCF1AFB9204008FA782"
+               BuildableName = "RxMapKit_Example.app"
+               BlueprintName = "RxMapKit_Example"
+               ReferencedContainer = "container:RxMapKit.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "607FACE41AFB9204008FA782"
+               BuildableName = "RxMapKit_Tests.xctest"
+               BlueprintName = "RxMapKit_Tests"
                ReferencedContainer = "container:RxMapKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -27,10 +41,27 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
+            BuildableName = "RxMapKit_Example.app"
+            BlueprintName = "RxMapKit_Example"
+            ReferencedContainer = "container:RxMapKit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "607FACE41AFB9204008FA782"
+               BuildableName = "RxMapKit_Tests.xctest"
+               BlueprintName = "RxMapKit_Tests"
+               ReferencedContainer = "container:RxMapKit.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -42,17 +73,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A96B8DAA1DB78DA1003BB7B6"
-            BuildableName = "RxMapKit.framework"
-            BlueprintName = "RxMapKit"
+            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
+            BuildableName = "RxMapKit_Example.app"
+            BlueprintName = "RxMapKit_Example"
             ReferencedContainer = "container:RxMapKit.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -60,15 +90,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A96B8DAA1DB78DA1003BB7B6"
-            BuildableName = "RxMapKit.framework"
-            BlueprintName = "RxMapKit"
+            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
+            BuildableName = "RxMapKit_Example.app"
+            BlueprintName = "RxMapKit_Example"
             ReferencedContainer = "container:RxMapKit.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
