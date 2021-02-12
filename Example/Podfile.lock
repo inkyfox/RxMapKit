@@ -1,9 +1,4 @@
 PODS:
-  - FBSnapshotTestCase (2.1.4):
-    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
-  - FBSnapshotTestCase/Core (2.1.4)
-  - FBSnapshotTestCase/SwiftSupport (2.1.4):
-    - FBSnapshotTestCase/Core
   - RxCocoa (5.1.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -15,12 +10,10 @@ PODS:
   - RxSwift (5.1.1)
 
 DEPENDENCIES:
-  - FBSnapshotTestCase (~> 2.1.4)
   - RxMapKit (from `../`)
 
 SPEC REPOS:
   trunk:
-    - FBSnapshotTestCase
     - RxCocoa
     - RxRelay
     - RxSwift
@@ -30,12 +23,11 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxMapKit: a659cc2cca9bb2b2c6df7baf4659225988fa1429
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
 
-PODFILE CHECKSUM: 8b6a9202af567f40fe691d4faab0d3617da49579
+PODFILE CHECKSUM: f95aac50d28f8ac2fc0c9d58d1a1ae62563a5640
 
 COCOAPODS: 1.10.1
