@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   
   s.requires_arc          = true
   s.ios.deployment_target = '10.0'
-  s.source_files          = 'RxMapKit/*.swift'
+  s.source_files          = 'RxMapKit/Classes/**/*'
   
   s.dependency 'RxSwift'
   s.dependency 'RxCocoa'
