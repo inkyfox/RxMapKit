@@ -1,5 +1,5 @@
 import XCTest
-import RxMapKit
+//import RxMapKit
 
 class Tests: XCTestCase {
     
