@@ -17,13 +17,15 @@ class Annotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var subtitle: String? = nil
-    let reusableIdentifier: String = "annotaion"
+    let reusableIdentifier: String = "MapAnnotationView"
     
     init(coordinate: CLLocationCoordinate2D, title: String) {
         self.coordinate = coordinate
         self.title = title
     }
 }
+
+
 
 prefix func !(b: Bool?) -> Bool? { return b != nil ? !b! : nil }
 
@@ -77,25 +79,22 @@ class ViewController: UIViewController {
     private func addMapObjects() {
         let center = CLLocationCoordinate2D(latitude: 23.16, longitude: 113.23)
         let place0 = CLLocationCoordinate2D(latitude: 22.95, longitude: 113.36)
+
+        mapView.register(MapAnnotationView.self, forAnnotationViewWithReuseIdentifier: "MapAnnotationView")
         
         do {
             mapView.rx.handleViewForAnnotation { (mapView, annotation) in
-                if let _ = annotation as? MKUserLocation {
-                    return nil
-                } else if let a = annotation as? Annotation {
-                    let view = mapView.dequeueReusableAnnotationView(withIdentifier: a.reusableIdentifier) ??
-                        MKAnnotationView(annotation: annotation, reuseIdentifier: a.reusableIdentifier)
-                    view.image = #imageLiteral(resourceName: "marker_normal")
-                    view.canShowCallout = true
-                    view.isDraggable = true
-                    return view
-                } else {
-                    return nil
-                }
+                guard let anotation = annotation as? Annotation,
+                      let view = mapView.dequeueReusableAnnotationView(withIdentifier: anotation.reusableIdentifier) as? MapAnnotationView else { return nil }
+                view.image = UIImage(named: "map_markNormal")
+                view.canShowCallout = true
+                view.isDraggable = true
+                return view
             }
+            
             mapView.addAnnotations([
-                Annotation(coordinate: center, title: "Guangzhou"),
-                Annotation(coordinate: place0, title: "Guangzhou - Panyu"),
+                Annotation(coordinate: center, title: "1"),
+                Annotation(coordinate: place0, title: "2")
                 ])
         }
         
@@ -162,11 +161,11 @@ extension ViewController {
 
         mapView.rx.didAddAnnotationViews
             .subscribe(onNext: { views in
-                for v in views {
-                    print("Did add annotation views: \(v.annotation!.title! ?? "unknown")")
-                    v.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
-                    UIView.animate(withDuration: 0.4) { v.transform = CGAffineTransform.identity }
-                }
+//                for v in views {
+//                    print("Did add annotation views: \(v.annotation!.title! ?? "unknown")")
+//                    v.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
+//                    UIView.animate(withDuration: 0.4) { v.transform = CGAffineTransform.identity }
+//                }
             })
             .disposed(by: disposeBag)
         
@@ -174,15 +173,15 @@ extension ViewController {
             .subscribe(onNext: { view in
                 print("Did selected: \(view.annotation!.title! ?? "")")
 //                view.image = #imageLiteral(resourceName: "marker_selected")
-                view.backgroundColor = .purple
+//                view.backgroundColor = .purple
             })
             .disposed(by: disposeBag)
 
         mapView.rx.didDeselectAnnotationView
             .subscribe(onNext: { view in
                 print("Did deselected: \(view.annotation!.title! ?? "")")
-//                view.image = #imageLiteral(resourceName: "marker_normal")
-                view.backgroundColor = .clear
+////                view.image = #imageLiteral(resourceName: "marker_normal")
+//                view.backgroundColor = .clear
             })
             .disposed(by: disposeBag)
         
