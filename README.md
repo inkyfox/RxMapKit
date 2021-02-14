@@ -1,5 +1,5 @@
 # RxMapKit
-![Swift](https://img.shields.io/badge/Swift-4.1-orange.svg)
+![Swift](https://img.shields.io/badge/Swift-5-orange.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](https://img.shields.io/cocoapods/v/RxMapKit.svg?style=flat)](http://cocoapods.org/pods/RxMapKit)
 [![License](https://img.shields.io/cocoapods/l/RxMapKit.svg?style=flat)](http://cocoapods.org/pods/RxMapKit)
@@ -26,9 +26,8 @@ self.view.addSubview(mapView)
 ```swift
 // Camera position
 
-mapView.rx.regionDidChange.asDriver()
-    .drive(onNext: { print("Did region change: \($0.region) isAnimated \($0.isAnimated)") })
-    .addDisposableTo(disposeBag)
+mapView.rx.regionDidChange
+    .subscribe(onNext: { print("Did region change: \($0.region) isAnimated \($0.isAnimated)") })
 
 // Marker tapped
 
@@ -38,13 +37,21 @@ mapView.rx.didTapMarker.asDriver()
 
 // Update marker icon 
 
-mapView.rx.didSelectAnnotationView.asDriver()
-    .drive(onNext: { $0.image = #imageLiteral(resourceName: "marker_selected") })
-    .addDisposableTo(disposeBag)
+mapView.rx.didSelectAnnotationView
+    .subscribe(onNext: { view in
+        print("Did selected: \(view.annotation!.title! ?? "")")
+                view.image = #imageLiteral(resourceName: "marker_selected")
+        view.backgroundColor = .purple
+    })
+    .disposed(by: disposeBag)
 
-mapView.rx.didDeselectAnnotationView.asDriver()
-    .drive(onNext: { $0.image = #imageLiteral(resourceName: "marker_normal") })
-    .addDisposableTo(disposeBag)
+mapView.rx.didDeselectAnnotationView
+    .subscribe(onNext: { view in
+        print("Did deselected: \(view.annotation!.title! ?? "")")
+                view.image = #imageLiteral(resourceName: "marker_normal")
+        view.backgroundColor = .clear
+    })
+    .disposed(by: disposeBag)
                 
 ```
 
@@ -128,9 +135,9 @@ github "inkyfox/RxMapKit"
 
 ## Requirements
 
-- Swift 4.1
-- [RxSwift](https://github.com/ReactiveX/RxSwift) 4.2
-- [RxCocoa](https://github.com/ReactiveX/RxSwift) 4.2
+- Swift 5.0
+- [RxSwift](https://github.com/ReactiveX/RxSwift) 5.1.1
+- [RxCocoa](https://github.com/ReactiveX/RxSwift) 5.1.1
 
 ## Author
 
